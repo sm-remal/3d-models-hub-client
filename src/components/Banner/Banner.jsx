@@ -10,7 +10,6 @@ const videos = [
 const Banner = () => {
   const [current, setCurrent] = useState(0);
 
-  // Auto-play the carousel every 6 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % videos.length);
@@ -23,8 +22,7 @@ const Banner = () => {
   const nextSlide = () => setCurrent((current + 1) % videos.length);
 
   return (
-    <>
-    <div className="absolute w-full flex top-0 left-0 justify-center ">
+    <div className="w-full flex justify-center -mt-20">
       <div className="max-w-7xl mx-auto">
         <div className="relative w-full overflow-hidden bg-black rounded-2xl shadow-2xl">
           <div
@@ -39,7 +37,7 @@ const Banner = () => {
                   loop
                   muted
                   playsInline
-                  className="w-full h-[60vh] object-cover brightness-90"
+                  className="w-full h-[80vh] object-cover brightness-90"
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-black/40 to-transparent" />
               </div>
@@ -75,8 +73,6 @@ const Banner = () => {
         </div>
       </div>
     </div>
-    <div className="mb-[500px]"></div>
-    </>
   );
 };
 

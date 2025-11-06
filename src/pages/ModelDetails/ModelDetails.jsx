@@ -38,7 +38,7 @@ const ModelDetails = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`https://3d-model-server.vercel.app/models/${model._id}`, {
+        fetch(`https://http://localhost:3000/model/${model._id}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",

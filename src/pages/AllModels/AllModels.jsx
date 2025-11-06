@@ -23,7 +23,7 @@ const AllModels = () => {
   }
 
   return (
-    <div>
+    <div className="px-4">
       <div className="text-2xl text-center font-bold"> All Models</div>
       <p className=" text-center ">Explore 3d models.</p>
      
@@ -50,7 +50,7 @@ const AllModels = () => {
       <button className="btn btn-secondary  rounded-full">{loading ? "Searching...." : "Search"}</button>
      </form>
 
-      <div className="grid grid-cols-3 lg:grid-cols-4 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
         {models.map((model) => (
           <ModelCard key={model._id} model={model} />
         ))}
