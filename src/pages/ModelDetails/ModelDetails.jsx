@@ -3,29 +3,27 @@ import { Link, useNavigate, useParams } from "react-router";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const ModelDetails = () => {
   const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure()
   const { id } = useParams();
   const [model, setModel] = useState({});
   const [loading, setLoading] = useState(true);
   const { user } = useAuth()
   const [refetch, setRefecth] = useState(false)
-
+console.log(model)
   useEffect(() => {
-    fetch(`http://localhost:3000/model/${id}`, {
-      headers: {
-        authorization: `Bearer ${user.accessToken}`,
-      },
-    })
-      .then((res) => res.json())
+    
+    axiosSecure.get(`/model/${id}`)
       .then((data) => {
-        setModel(data.result);
+        setModel(data.data);
         console.log(" Api called!")
-        console.log(data);
+        console.log(data.data);
         setLoading(false);
       });
-  }, [user, id, refetch]);
+  }, [user, id, refetch, axiosSecure]);
 
   const handleDlete = () => {
     Swal.fire({
@@ -38,13 +36,8 @@ const ModelDetails = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`https://http://localhost:3000/model/${model._id}`, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-          .then((res) => res.json())
+        
+        axiosSecure.delete(`/model/${model._id}`)
           .then((data) => {
             console.log(data);
             navigate("/all-models");
@@ -73,14 +66,7 @@ const ModelDetails = () => {
       downloaded_by: user.email,
     };
 
-    fetch(`https://3d-model-server.vercel.app/downloads/${model._id}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(finalModel),
-    })
-      .then((res) => res.json())
+    axiosSecure.post(`/downloads/${model._id}`, finalModel)
       .then((data) => {
         console.log(data);
         toast.success("Successfully downloaded!");

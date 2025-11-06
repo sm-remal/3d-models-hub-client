@@ -1,9 +1,11 @@
 import toast from "react-hot-toast";
 import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const AddModel = () => {
 
   const { user } = useAuth()
+  const axiosSecure = useAxiosSecure()
 
 
   const handleSubmit = (e) => {
@@ -19,17 +21,18 @@ const AddModel = () => {
       created_by: user.email
     }
 
-    fetch('http://localhost:3000/model', {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData)
-    })
-    .then(res => res.json())
+    // fetch('http://localhost:3000/model', {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(formData)
+    // })
+    // .then(res => res.json())
+    axiosSecure.post("/model", formData)
     .then(data=> {
       toast.success("Successfully added!")
-      console.log(data)
+      console.log(data.data)
     })
     .catch(err => {
       console.log(err)
