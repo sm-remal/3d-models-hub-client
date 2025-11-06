@@ -6,11 +6,11 @@ import Login from "../pages/Login/Login";
 import AllModels from "../pages/AllModels/AllModels";
 import AddModel from "../pages/AddModel/AddModel";
 import ModelDetails from "../pages/ModelDetails/ModelDetails";
+import MyModels from "../pages/MyModels/MyModels";
+import MyDownloads from "../pages/MyDownloads/MyDownloads";
 // import Profile from "../Pages/Profile/Profile";
 // import PrivateRoute from "./PrivateRoute";
-// import UpdateModel from "../Pages/UpdateModel/UpdateModel";
-// import MyModels from "../Pages/MyModels/MyModels";
-// import MyDownloads from "../Pages/MyDownloads/MyDownloads";
+// import UpdateModel from "../Pages/UpdateModel/UpdateModel";";
 
 export const router = createBrowserRouter([
   {
@@ -54,23 +54,23 @@ export const router = createBrowserRouter([
         ),
       },
 
-    //    {
-    //     path: "/my-models",
-    //     element: (
-    //       <PrivateRoute>
-    //         <MyModels />
-    //       </PrivateRoute>
-    //     ),
-    //   },
+       {
+        path: "/my-models",
+        element: (
+          // <PrivateRoute>
+            <MyModels />
+          // </PrivateRoute>
+        ),
+      },
 
-    //    {
-    //     path: "/my-downloads",
-    //     element: (
-    //       <PrivateRoute>
-    //         <MyDownloads />
-    //       </PrivateRoute>
-    //     ),
-    //   },
+       {
+        path: "/my-downloads",
+        element: (
+          // <PrivateRoute>
+            <MyDownloads />
+          // </PrivateRoute>
+        ),
+      },
 
         // {
         // path: "/update-model/:id",

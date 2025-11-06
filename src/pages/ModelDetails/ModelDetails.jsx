@@ -57,16 +57,16 @@ console.log(model)
 
   const handleDownload = () => {
     const finalModel = {
-      name: model.name,
-      downloads: model.downloads,
-      created_by: model.created_by,
-      description: model.description,
-      thumbnail: model.thumbnail,
+      name: model?.name,
+      downloads: model?.downloads,
+      created_by: model?.created_by,
+      description: model?.description,
+      thumbnail: model?.thumbnail,
       created_at: new Date(),
-      downloaded_by: user.email,
+      downloaded_by: user?.email,
     };
 
-    axiosSecure.post(`/downloads/${model._id}`, finalModel)
+    axiosSecure.post(`/downloads`, finalModel)
       .then((data) => {
         console.log(data);
         toast.success("Successfully downloaded!");
