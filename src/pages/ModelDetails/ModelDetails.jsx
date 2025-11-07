@@ -4,28 +4,40 @@ import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import ErrorDetailsPage from "../../components/ErrorPage/ErrorDetailsPage";
 
 const ModelDetails = () => {
   const navigate = useNavigate();
-  const axiosSecure = useAxiosSecure()
+  const axiosSecure = useAxiosSecure();
   const { id } = useParams();
-  const [model, setModel] = useState({});
-  const [loading, setLoading] = useState(true);
-  const { user } = useAuth()
-  const [refetch, setRefecth] = useState(false)
-console.log(model)
-  useEffect(() => {
-    
-    axiosSecure.get(`/model/${id}`)
-      .then((data) => {
-        setModel(data.data);
-        console.log(" Api called!")
-        console.log(data.data);
-        setLoading(false);
-      });
-  }, [user, id, refetch, axiosSecure]);
+  const { user } = useAuth();
 
-  const handleDlete = () => {
+  const [model, setModel] = useState(null);
+  const [error, setError] = useState(false);
+  const [refetch, setRefetch] = useState(false);
+
+  useEffect(() => {
+    if (!id) return setError(true);
+
+    
+    setError(false);
+
+    axiosSecure.get(`/model/${id}`)
+      .then((res) => {
+        if (!res.data || Object.keys(res.data).length === 0) {
+          setError(true);
+        } else {
+          setModel(res.data);
+        }
+      })
+      .catch((err) => {
+        console.error("Error fetching model:", err);
+        setError(true);
+      })
+
+  }, [id, user, refetch, axiosSecure]);
+
+  const handleDelete = () => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -36,21 +48,13 @@ console.log(model)
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        
-        axiosSecure.delete(`/model/${model._id}`)
-          .then((data) => {
-            console.log(data);
+        axiosSecure
+          .delete(`/model/${model?._id}`)
+          .then(() => {
             navigate("/all-models");
-
-            Swal.fire({
-              title: "Deleted!",
-              text: "Your file has been deleted.",
-              icon: "success",
-            });
+            Swal.fire("Deleted!", "Your model has been deleted.", "success");
           })
-          .catch((err) => {
-            console.log(err);
-          });
+          .catch((err) => console.error(err));
       }
     });
   };
@@ -66,30 +70,28 @@ console.log(model)
       downloaded_by: user?.email,
     };
 
-    axiosSecure.post(`/downloads`, finalModel)
-      .then((data) => {
-        console.log(data);
+    axiosSecure
+      .post(`/downloads`, finalModel)
+      .then(() => {
         toast.success("Successfully downloaded!");
-        setRefecth(!refetch)
-
+        setRefetch(!refetch);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => console.error(err));
   };
 
-  if (loading) {
-    return <div> Loading...</div>;
+  
+  if (error || !model) {
+    return <ErrorDetailsPage />;
   }
 
   return (
     <div className="max-w-5xl mx-auto p-4 md:p-6 lg:p-8">
-      <div className="card bg-base-100 shadow-xl border border-gray-200 rounded-2xl overflow-hidden">
+      <div className="card shadow-xl border border-gray-200 rounded-2xl overflow-hidden">
         <div className="flex flex-col md:flex-row gap-8 p-6 md:p-8">
           <div className="shrink-0 w-full md:w-1/2">
             <img
-              src={model?.thumbnail || "Model"}
-              alt=""
+              src={model?.thumbnail || "/placeholder.jpg"}
+              alt={model?.name || "Model Thumbnail"}
               className="w-full object-cover rounded-xl shadow-md"
             />
           </div>
@@ -113,7 +115,7 @@ console.log(model)
               {model?.description}
             </p>
 
-            <div className="flex gap-3 mt-6">
+            <div className="flex flex-wrap gap-3 mt-6">
               <Link
                 to={`/update-model/${model?._id}`}
                 className="btn btn-primary rounded-full bg-linear-to-r from-pink-500 to-red-600 text-white border-0 hover:from-pink-600 hover:to-red-700"
@@ -127,7 +129,7 @@ console.log(model)
                 Download
               </button>
               <button
-                onClick={handleDlete}
+                onClick={handleDelete}
                 className="btn btn-outline rounded-full border-gray-300 hover:border-pink-500 hover:text-pink-600"
               >
                 Delete

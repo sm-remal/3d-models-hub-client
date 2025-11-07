@@ -12,11 +12,15 @@ import MyProfile from "../pages/MyProfile/MyProfile";
 import UpdateModel from "../pages/UpdateModel/UpdateModel";
 import ForgetPassword from "../pages/ForgetPassword/ForgetPassword";
 import PrivateRoute from "./PrivateRoute";
+import Loading from "../components/Loading/Loading";
+import ErrorPage from "../components/ErrorPage/ErrorPage";
 
 
 export const router = createBrowserRouter([
   {
     path: "/",
+    hydrateFallbackElement: <Loading></Loading>,
+    errorElement: <ErrorPage></ErrorPage>,
     element: <MainLayout />,
     children: [
       {
