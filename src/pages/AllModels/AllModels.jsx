@@ -1,9 +1,11 @@
 import { useLoaderData } from "react-router";
 import { useState } from "react";
 import { ModelCard } from "../../components/ModelCard/ModelCard";
+// import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const AllModels = () => {
   const data = useLoaderData();
+  // const axiosSecure = useAxiosSecure()
   const [models, setModels] = useState(data)
   const [loading, setLoading] = useState(false)
 
@@ -13,8 +15,9 @@ const AllModels = () => {
     console.log(search_text)
     setLoading(true)
 
-    fetch(`https://3d-model-server.vercel.app/search?search=${search_text}`)
+    fetch(`http://localhost:3000/search?search=${search_text}`)
     .then(res=> res.json())
+    // axiosSecure.get(`/search?search=${search_text}`)
     .then(data=> {
       console.log(data)
       setModels(data)
