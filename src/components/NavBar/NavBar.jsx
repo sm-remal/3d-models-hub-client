@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import { IoLogoModelS } from "react-icons/io";
 import { GoHomeFill } from "react-icons/go";
 import { IoLogIn, IoLogOut } from "react-icons/io5";
@@ -7,11 +7,30 @@ import { LuRotate3D } from "react-icons/lu";
 import { ImBoxAdd } from "react-icons/im";
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
+import toast from "react-hot-toast";
+import { getErrorMessage } from "../../utility/errorMessage";
 
 const NavBar = () => {
   const { user, signOutUser } = useAuth()
-
   const [theme, setTheme] = useState(localStorage.getItem('theme') || "light")
+  const [error, setError] = useState('')
+  const navigate = useNavigate()
+
+  // Sign Out Function
+  const handleSignout = () => {
+    toast.loading("Please wait for signout...", { id: "signout" });
+    signOutUser()
+      .then(() => {
+        toast.success("Signout successful!", { id: "signout" });
+        // setUser(null);
+        navigate(location.state || "/");
+      })
+      .catch((err) => {
+        const errorMessage = getErrorMessage(err.code);
+        setError(errorMessage);
+        toast.error(error, { id: "login" });
+      });
+  };
 
   useEffect(() => {
     const html = document.querySelector('html')
@@ -141,7 +160,7 @@ const NavBar = () => {
               </li>
               <li>
                 <button
-                  onClick={signOutUser}
+                  onClick={handleSignout}
                   className="btn btn-xs text-left bg-linear-to-r from-pink-500 to-red-500 text-white"
                 >
                   <IoLogOut /> Logout

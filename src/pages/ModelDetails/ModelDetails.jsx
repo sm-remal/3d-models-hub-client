@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import ErrorDetailsPage from "../../components/ErrorPage/ErrorDetailsPage";
+import Loading from "../../components/Loading/Loading";
 
 const ModelDetails = () => {
   const navigate = useNavigate();
@@ -13,26 +14,19 @@ const ModelDetails = () => {
   const { user } = useAuth();
 
   const [model, setModel] = useState(null);
-  const [error, setError] = useState(false);
   const [refetch, setRefetch] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!id) return setError(true);
-
-    
-    setError(false);
-
+    setLoading(true);
     axiosSecure.get(`/model/${id}`)
       .then((res) => {
-        if (!res.data || Object.keys(res.data).length === 0) {
-          setError(true);
-        } else {
           setModel(res.data);
-        }
+          setLoading(false);
       })
       .catch((err) => {
         console.error("Error fetching model:", err);
-        setError(true);
+        setLoading(false)
       })
 
   }, [id, user, refetch, axiosSecure]);
@@ -61,6 +55,7 @@ const ModelDetails = () => {
 
   const handleDownload = () => {
     const finalModel = {
+       _id: model?._id,
       name: model?.name,
       downloads: model?.downloads,
       created_by: model?.created_by,
@@ -70,8 +65,7 @@ const ModelDetails = () => {
       downloaded_by: user?.email,
     };
 
-    axiosSecure
-      .post(`/downloads`, finalModel)
+    axiosSecure.post(`/downloads`, finalModel)
       .then(() => {
         toast.success("Successfully downloaded!");
         setRefetch(!refetch);
@@ -79,8 +73,11 @@ const ModelDetails = () => {
       .catch((err) => console.error(err));
   };
 
+  if (loading) {
+  return <Loading></Loading>;
+}
   
-  if (error || !model) {
+  if (!model) {
     return <ErrorDetailsPage />;
   }
 

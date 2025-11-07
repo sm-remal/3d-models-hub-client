@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { ModelCard } from "../../components/ModelCard/ModelCard";
+import Loading from "../../components/Loading/Loading";
 
 const MyModels = () => {
   const { user, loading: authLoading } = useAuth();
@@ -20,7 +21,7 @@ const MyModels = () => {
   }, [user, authLoading, axiosSecure]);
 
   if (authLoading || loading) {
-    return <div className="text-center mt-10">Loading...</div>;
+    return <Loading></Loading>;
   }
 
   return (

@@ -7,7 +7,7 @@ const ErrorDetailsPage = () => {
     const navigate = useNavigate()
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 text-center px-4">
+        <div className="flex flex-col items-center justify-center min-h-screen text-center px-4">
 
             <div className="bg-red-100 p-6 rounded-full shadow-sm mb-6">
                 <AlertTriangle className="text-red-500 w-16 h-16" />
