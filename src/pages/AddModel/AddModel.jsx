@@ -3,10 +3,8 @@ import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const AddModel = () => {
-
   const { user } = useAuth()
   const axiosSecure = useAxiosSecure()
-
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -21,14 +19,6 @@ const AddModel = () => {
       created_by: user.email
     }
 
-    // fetch('http://localhost:3000/model', {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(formData)
-    // })
-    // .then(res => res.json())
     axiosSecure.post("/model", formData)
     .then(data=> {
       toast.success("Successfully added!")
@@ -38,9 +28,7 @@ const AddModel = () => {
       console.log(err)
     })
    
-
   }
-
 
   return (
     <div className="card border border-gray-200 bg-base-100 w-full max-w-md mx-auto shadow-2xl rounded-2xl">
