@@ -93,9 +93,13 @@ const Login = () => {
 
               <div>
                 <Link
-                  to="/reset-password"
+                  to="/forget-password"
                   state={{ email }}
                   className="link link-hover text-pink-600 hover:text-red-600"
+                  onClick={() =>
+                    navigate("/auth/forget-password", { state: { email } })
+                  }
+
                 >
                   Forgot password?
                 </Link>

@@ -10,7 +10,9 @@ import MyModels from "../pages/MyModels/MyModels";
 import MyDownloads from "../pages/MyDownloads/MyDownloads";
 import MyProfile from "../pages/MyProfile/MyProfile";
 import UpdateModel from "../pages/UpdateModel/UpdateModel";
-// import PrivateRoute from "./PrivateRoute";
+import ForgetPassword from "../pages/ForgetPassword/ForgetPassword";
+import PrivateRoute from "./PrivateRoute";
+
 
 export const router = createBrowserRouter([
   {
@@ -21,63 +23,61 @@ export const router = createBrowserRouter([
         path: "/",
         element: <Home />,
         loader: () => fetch("http://localhost:3000/latest-model"),
-        // loader: () => fetch('https://3d-model-server.vercel.app/latest-models')
       },
       {
         path: "/all-models",
         element: <AllModels />,
         loader: () => fetch("http://localhost:3000/model"),
-        // loader: () => fetch('https://3d-model-server.vercel.app/models')
       },
       {
         path: "/profile",
         element: (
-          // <PrivateRoute>
+          <PrivateRoute>
             <MyProfile />
-          // </PrivateRoute>
+          </PrivateRoute>
         ),
       },
       {
         path: "/add-model",
         element: (
-          // <PrivateRoute>
+          <PrivateRoute>
             <AddModel />
-          // </PrivateRoute>
+          </PrivateRoute>
         ),
       },
       {
         path: "/model-details/:id",
         element: (
-          // <PrivateRoute>
+          <PrivateRoute>
             <ModelDetails />
-          // </PrivateRoute>
+          </PrivateRoute>
         ),
       },
 
        {
         path: "/my-models",
         element: (
-          // <PrivateRoute>
+          <PrivateRoute>
             <MyModels />
-          // </PrivateRoute>
+          </PrivateRoute>
         ),
       },
 
        {
         path: "/my-downloads",
         element: (
-          // <PrivateRoute>
+          <PrivateRoute>
             <MyDownloads />
-          // </PrivateRoute>
+          </PrivateRoute>
         ),
       },
 
         {
         path: "/update-model/:id",
         element: (
-          // <PrivateRoute>
+          <PrivateRoute>
             <UpdateModel />
-          // </PrivateRoute>
+          </PrivateRoute>
         ),
            loader: ({ params }) => fetch(`http://localhost:3000/model/${params.id}`)
       },
@@ -89,6 +89,10 @@ export const router = createBrowserRouter([
         path: "/auth/register",
         element: <Registration />,
       },
+      {
+        path: "forget-password",
+        element: <ForgetPassword />
+      }
     ],
   },
 ]);
