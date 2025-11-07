@@ -8,9 +8,9 @@ import AddModel from "../pages/AddModel/AddModel";
 import ModelDetails from "../pages/ModelDetails/ModelDetails";
 import MyModels from "../pages/MyModels/MyModels";
 import MyDownloads from "../pages/MyDownloads/MyDownloads";
-// import Profile from "../Pages/Profile/Profile";
+import MyProfile from "../pages/MyProfile/MyProfile";
+import UpdateModel from "../pages/UpdateModel/UpdateModel";
 // import PrivateRoute from "./PrivateRoute";
-// import UpdateModel from "../Pages/UpdateModel/UpdateModel";";
 
 export const router = createBrowserRouter([
   {
@@ -29,14 +29,14 @@ export const router = createBrowserRouter([
         loader: () => fetch("http://localhost:3000/model"),
         // loader: () => fetch('https://3d-model-server.vercel.app/models')
       },
-    //   {
-    //     path: "/profile",
-    //     element: (
-    //       <PrivateRoute>
-    //         <Profile />
-    //       </PrivateRoute>
-    //     ),
-    //   },
+      {
+        path: "/profile",
+        element: (
+          // <PrivateRoute>
+            <MyProfile />
+          // </PrivateRoute>
+        ),
+      },
       {
         path: "/add-model",
         element: (
@@ -72,15 +72,15 @@ export const router = createBrowserRouter([
         ),
       },
 
-        // {
-        // path: "/update-model/:id",
-        // element: (
-        //   <PrivateRoute>
-        //     <UpdateModel />
-        //   </PrivateRoute>
-        // ),
-        //   loader: ({params}) => fetch(`https://3d-model-server.vercel.app/models/${params.id}`)
-    //   },
+        {
+        path: "/update-model/:id",
+        element: (
+          // <PrivateRoute>
+            <UpdateModel />
+          // </PrivateRoute>
+        ),
+           loader: ({ params }) => fetch(`http://localhost:3000/model/${params.id}`)
+      },
       {
         path: "/auth/login",
         element: <Login />,

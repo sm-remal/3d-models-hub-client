@@ -11,7 +11,7 @@ const Home = () => {
             <Banner />
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
-                <h2 className="text-center text-2xl sm:text-3xl md:text-4xl font-bold text-pink-700 mb-6">
+                <h2 className="text-center text-2xl sm:text-3xl md:text-4xl font-bold text-pink-500 mb-8">
                     Latest Models
                 </h2>
 
