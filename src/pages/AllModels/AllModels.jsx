@@ -15,7 +15,7 @@ const AllModels = () => {
     console.log(search_text)
     setLoading(true)
 
-    fetch(`http://localhost:3000/search?search=${search_text}`)
+    fetch(`https://3d-models-server-cyan.vercel.app/search?search=${search_text}`)
     .then(res=> res.json())
     // axiosSecure.get(`/search?search=${search_text}`)
     .then(data=> {
