@@ -22,7 +22,7 @@ const Banner = () => {
   const nextSlide = () => setCurrent((current + 1) % videos.length);
 
   return (
-    <div className="w-full flex justify-center -mt-20">
+    <div className="w-full flex justify-center -mt-34 md:-mt-20">
       <div className="max-w-7xl mx-auto">
         <div className="relative w-full overflow-hidden bg-black rounded-2xl shadow-2xl">
           <div
@@ -37,7 +37,7 @@ const Banner = () => {
                   loop
                   muted
                   playsInline
-                  className="w-full h-[80vh] object-cover brightness-90"
+                  className="w-full h-[40vh] md:h-[80vh] object-cover brightness-90"
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-black/40 to-transparent" />
               </div>
